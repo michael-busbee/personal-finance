@@ -17,6 +17,12 @@ app.get('/envelopes', (req, res, next) => {
     res.send(message);
 });
 
+app.get('/envelopes/:envelopeName', (req, res, next) => {
+    const envelopeName = req.params.envelopeName;
+    const message = `${envelopeName}: ${envelopes[envelopeName]}`;
+    res.send(message);
+});
+
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 });
