@@ -12,11 +12,11 @@ const envelopes = {
 
 };
 
-app.get('/', (req, res, next) => {
+app.get('/envelopes', (req, res, next) => {
     const message = `${JSON.stringify(envelopes)}`;
     res.send(message);
 });
 
 app.listen(PORT, () => {
-	console.log(`Server is listening on port ${PORT}`);
+    console.log(`Server is listening on port ${PORT}`);
 });
