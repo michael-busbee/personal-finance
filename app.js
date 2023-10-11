@@ -4,9 +4,15 @@ const app = express();
 const PORT = process.env.PORT || 4001;
 
 const envelopes = {
-    Housing: 1200,
-    Utilities: 400,
-    Groceries: 400
+    Housing: {
+        Balance: 1200,
+    },
+    Utilities: {
+        Balance: 400,
+    },
+    Groceries: {
+        Balance: 400
+    }
 };
 
 app.get('/envelopes', (req, res, next) => {
@@ -19,7 +25,7 @@ app.get('/envelopes/:envelopeName', (req, res, next) => {
     if(!envelopes[envelopeName]){
         res.send("Envelope not found! Please check your spelling and try again.")
     }
-    const message = `${envelopeName}: ${envelopes[envelopeName]}`;
+    const message = `${envelopeName}: ${envelopes[envelopeName].Balance}`;
     res.send(message);
 });
 
