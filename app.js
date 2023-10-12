@@ -45,8 +45,15 @@ app.post('/Envelopes/:envelopeName/', (req, res, next) => {
     res.send(message);
 });
 
-app.delete('/Envelopes/:envelopeName/', (req, res, next) => {
-    Envelopes.filter((envelope) => envelope != envelopeName);
+app.delete('/Envelopes/:envelopeName/Delete', (req, res, next) => {
+    const envelopeName = req.params.envelopeName;
+    if (Envelopes[envelopeName]){
+        delete Envelopes[envelopeName];
+        res.send("Envelope Deleted");
+    } else {
+        const message = `Envelope ${envelopeName} does not exist!`;
+        res.send(message);
+    }
 });
 
 app.listen(PORT, () => {
