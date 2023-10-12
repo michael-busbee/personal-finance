@@ -15,8 +15,12 @@ const Envelopes = {
     }
 };
 
+app.get('/', (req, res, next) => {
+    res.redirect('/Envelopes');
+});
+
 app.get('/Envelopes', (req, res, next) => {
-    const message = `${JSON.stringify(envelopes)}`;
+    const message = `${JSON.stringify(Envelopes)}`;
     res.send(message);
 });
 
