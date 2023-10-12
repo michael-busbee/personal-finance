@@ -1,7 +1,7 @@
 const express = require('express');
 
 const app = express();
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 4002;
 
 const Envelopes = {
     Housing: {
@@ -34,7 +34,10 @@ app.post('/Envelopes/:envelopeName/', (req, res, next) => {
     const envelopeName = req.params.envelopeName;
     const originalBalance = Envelopes[envelopeName].Balance;
     Envelopes[envelopeName].Balance -= debit;
-    const message = `<h1>${envelopeName}</h1>\nOriginal Balance: ${originalBalance}\nAmount Debited: ${debit}\nNew Balance: ${Envelopes[envelopeName].Balance}\n`;
+    const message = `<h1>${envelopeName}</h1>\n<p>Original Balance: ${originalBalance}\nAmount Debited: ${debit}\nNew Balance: ${Envelopes[envelopeName].Balance}\n</p>`;
+    if (Envelopes[envelopeName].Balance < 0) {
+        res.send("This Envelope is empty! Please add more to the budget or reconsider purchase.");
+    }
     res.send(message);
 });
 
