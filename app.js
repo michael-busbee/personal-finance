@@ -45,6 +45,33 @@ app.post('/Envelopes/:envelopeName/', (req, res, next) => {
     res.send(message);
 });
 
+app.post('/Envelopes/Transfer/:From/:To', (req, res, next) => {
+    const From = req.params.From;
+    const To = req.params.To;
+    const Amount = req.query.Amount;
+
+    //Checks whether From and To are valid envelopes
+    if(!(Envelopes[From] && Envelopes[To])) {
+        res.send("Envelope(s) Not Found! Please check your spelling and try again");
+    }
+
+    //Checks if Amount is posiitve
+    if(Amount <= 0) {
+        res.send("Invalid Transfer Amount! Try Again.")
+    }
+
+    //Checks whether Origin envelope has enough funds to transfer
+    if (Envelopes[From] - Amount < 0) {
+        res.send(`Envelope ${From} has insufficient funds for transfer!`);
+    }
+
+    //Once all checks are complete, continue with transfer
+    Envelopes[From].Balance -= Amount;
+    Envelopes[To].Balance += Number(Amount);
+    const message = `${From} -> $${Amount} -> ${To}`;
+    res.send(message);
+});
+
 app.delete('/Envelopes/:envelopeName/Delete', (req, res, next) => {
     const envelopeName = req.params.envelopeName;
     if (Envelopes[envelopeName]){
