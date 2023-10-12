@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 4001;
 
-const envelopes = {
+const Envelopes = {
     Housing: {
         Balance: 1200,
     },
@@ -15,24 +15,26 @@ const envelopes = {
     }
 };
 
-app.get('/envelopes', (req, res, next) => {
+app.get('/Envelopes', (req, res, next) => {
     const message = `${JSON.stringify(envelopes)}`;
     res.send(message);
 });
 
-app.get('/envelopes/:envelopeName', (req, res, next) => {
+app.get('/Envelopes/:envelopeName', (req, res, next) => {
     const envelopeName = req.params.envelopeName;
-    if(!envelopes[envelopeName]){
+    if(!Envelopes[envelopeName]){
         res.send("Envelope not found! Please check your spelling and try again.")
     }
-    const message = `${envelopeName}: ${envelopes[envelopeName].Balance}`;
+    const message = `<h1>${envelopeName}</h1>\nBalance: ${Envelopes[envelopeName].Balance}`;
     res.send(message);
 });
 
-app.post('/envelopes/:envelopeName/:debit', (req, res, next) => {
-    const debit = req.params.debit;
+app.post('/Envelopes/:envelopeName/', (req, res, next) => {
+    const debit = req.query.Debit;
     const envelopeName = req.params.envelopeName;
-    const message = `${envelopeName}: ${debit}`;
+    const originalBalance = Envelopes[envelopeName].Balance;
+    Envelopes[envelopeName].Balance -= debit;
+    const message = `<h1>${envelopeName}</h1>\nOriginal Balance: ${originalBalance}\nAmount Debited: ${debit}\nNew Balance: ${Envelopes[envelopeName].Balance}\n`;
     res.send(message);
 });
 
