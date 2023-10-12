@@ -33,12 +33,12 @@ app.get('/Envelopes/:envelopeName', (req, res, next) => {
     res.send(message);
 });
 
-app.post('/Envelopes/:envelopeName/', (req, res, next) => {
-    const debit = req.query.Debit;
+app.post('/Envelopes/:envelopeName/Debit', (req, res, next) => {
+    const Amount = req.query.Amount;
     const envelopeName = req.params.envelopeName;
     const originalBalance = Envelopes[envelopeName].Balance;
-    Envelopes[envelopeName].Balance -= debit;
-    const message = `<h1>${envelopeName}</h1>\n<p>Original Balance: ${originalBalance}\nAmount Debited: ${debit}\nNew Balance: ${Envelopes[envelopeName].Balance}\n</p>`;
+    Envelopes[envelopeName].Balance -= Amount;
+    const message = `<h1>${envelopeName}</h1>\n<p>Original Balance: ${originalBalance}\nAmount Debited: ${Amount}\nNew Balance: ${Envelopes[envelopeName].Balance}\n</p>`;
     if (Envelopes[envelopeName].Balance < 0) {
         res.send("This Envelope is empty! Please add more to the budget or reconsider purchase.");
     }
