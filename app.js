@@ -41,6 +41,10 @@ app.post('/Envelopes/:envelopeName/', (req, res, next) => {
     res.send(message);
 });
 
+app.delete('/Envelopes/:envelopeName/', (req, res, next) => {
+    Envelopes.filter((envelope) => envelope != envelopeName);
+});
+
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 });
